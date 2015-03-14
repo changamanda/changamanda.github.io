@@ -33,7 +33,7 @@ Professional theater productions hold open "previews" before the official openin
 
 Similarly, most web applications continue to grow even after they are deployed. Here at the Flatiron School, students present their projects to their classmates and instructors throughout the building process, in order to get feedback from potential users.
 
-##BUT WHY DOES THIS MATTER?
+##But Why Does This Matter?
 What I think developers, painters, and theater-makers all have in common is the desire to understand and contribute to the human experience. In order to do that, we must absorb our surroundings and let every interaction influence our work. In "Hackers and Painters," Graham writes:
 > *Empathy is probably the single most important difference between a good hacker and a great one. Some hackers are quite smart, but when it comes to empathy are practically solipsists. It's hard for such people to design great software, because they can't see things from the user's point of view.*
 
