@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[A Computer Walks Into A Bar]]></title>
-  <link href="http://changamanda.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: school | A Computer Walks Into A Bar]]></title>
+  <link href="http://changamanda.github.io/blog/categories/school/atom.xml" rel="self"/>
   <link href="http://changamanda.github.io/"/>
   <updated>2015-03-14T15:26:00-04:00</updated>
   <id>http://changamanda.github.io/</id>
@@ -10,6 +10,7 @@
     <name><![CDATA[Amanda Chang]]></name>
     
   </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
