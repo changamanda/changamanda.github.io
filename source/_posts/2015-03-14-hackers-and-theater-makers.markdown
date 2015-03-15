@@ -3,7 +3,7 @@ layout: post
 title: "Hackers and Theater-Makers"
 date: 2015-03-14 15:21:07 -0400
 comments: true
-categories: Flatiron School
+categories: Flatiron
 ---
 
 *This post was originally published on the [Flatiron School Blog](http://blog.flatironschool.com/hackers-and-theater-makers-code-as-a-creative/).*
