@@ -4,7 +4,7 @@
   <title><![CDATA[Category: generators | A Computer Walks Into A Bar]]></title>
   <link href="http://changamanda.github.io/blog/categories/generators/atom.xml" rel="self"/>
   <link href="http://changamanda.github.io/"/>
-  <updated>2015-04-09T11:56:10-04:00</updated>
+  <updated>2015-04-09T11:57:15-04:00</updated>
   <id>http://changamanda.github.io/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Bunnies && Generators]]></title>
-    <link href="http://changamanda.github.io/blog/2015/04/09/metaprogramming-for-bunnies/"/>
+    <link href="http://changamanda.github.io/blog/2015/04/09/generators-for-bunnies/"/>
     <updated>2015-04-09T11:41:19-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/04/09/metaprogramming-for-bunnies</id>
+    <id>http://changamanda.github.io/blog/2015/04/09/generators-for-bunnies</id>
     <content type="html"><![CDATA[<p><img src="http://i.imgur.com/O93mpLK.jpg" width="200" alt="Generators For Bunnies" /></p>
 
 <p>Happy Passover/Easter to all! In the spirit of the holidays, a short generators for bunnies blog post. (In other news, did everyone see the photos of <a href="http://www.bizpacreview.com/wp-content/uploads/2014/04/Obama-and-Easter-Bunny2.png">Obama with the Easter Bunny</a>??)</p>
