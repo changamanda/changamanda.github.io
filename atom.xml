@@ -4,7 +4,7 @@
   <title><![CDATA[A Computer Walks Into A Bar]]></title>
   <link href="http://changamanda.github.io/atom.xml" rel="self"/>
   <link href="http://changamanda.github.io/"/>
-  <updated>2015-04-09T11:57:15-04:00</updated>
+  <updated>2015-04-09T11:58:14-04:00</updated>
   <id>http://changamanda.github.io/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -29,7 +29,7 @@
 
 <h3>Building the Program</h3>
 
-<p>The first challenge in my generator, which I&rsquo;ll call <code>bunny-methods.rb</code>, is to take the file name argument and <code>touch</code> the file as usual. There are a few different ways to do this: I&rsquo;ll go through the system, because I want more practice interacting with Terminal through my Ruby programs:</p>
+<p>The first challenge in my generator, which I&rsquo;ll call <code>bunny_methods.rb</code>, is to take the file name argument and <code>touch</code> the file as usual. There are a few different ways to do this: I&rsquo;ll go through the system, because I want more practice interacting with Terminal through my Ruby programs:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -38,7 +38,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>So, <code>bunny-methods.rb</code> takes the first command-line argument – <code>ARGV[0]</code> – and creates a file with that name. But this file is still empty. Now I want to take the remaining command-line arguments and create empty methods inside of my new file.</p>
+<p>So, <code>bunny_methods.rb</code> takes the first command-line argument – <code>ARGV[0]</code> – and creates a file with that name. But this file is still empty. Now I want to take the remaining command-line arguments and create empty methods inside of my new file.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -59,7 +59,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If I run <code>ruby bunny-methods.rb new_file.rb method1 method2</code>, I get a new file <code>new_file.rb</code> with the contents:</p>
+<p>If I run <code>ruby bunny_methods.rb new_file.rb method1 method2</code>, I get a new file <code>new_file.rb</code> with the contents:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
