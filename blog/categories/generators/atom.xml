@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: generators | A Computer Walks Into A Bar]]></title>
+  <link href="http://changamanda.github.io/blog/categories/generators/atom.xml" rel="self"/>
+  <link href="http://changamanda.github.io/"/>
+  <updated>2015-04-09T11:56:10-04:00</updated>
+  <id>http://changamanda.github.io/</id>
+  <author>
+    <name><![CDATA[Amanda Chang]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Bunnies && Generators]]></title>
+    <link href="http://changamanda.github.io/blog/2015/04/09/metaprogramming-for-bunnies/"/>
+    <updated>2015-04-09T11:41:19-04:00</updated>
+    <id>http://changamanda.github.io/blog/2015/04/09/metaprogramming-for-bunnies</id>
+    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/O93mpLK.jpg" width="200" alt="Generators For Bunnies" /></p>
+
+<p>Happy Passover/Easter to all! In the spirit of the holidays, a short generators for bunnies blog post. (In other news, did everyone see the photos of <a href="http://www.bizpacreview.com/wp-content/uploads/2014/04/Obama-and-Easter-Bunny2.png">Obama with the Easter Bunny</a>??)</p>
+
+<p>Recently, I&rsquo;ve realized just how often I <code>touch</code> a Ruby file and then start by defining methods within it. I&rsquo;d love to save a little bit of time by building a Ruby file/methods generator – which will be a great exploration of generators and <code>ARGV</code>.</p>
+
+<h3><code>ARGV</code></h3>
+
+<p>When you run a Ruby file on your computer, any arguments after <code>ruby</code> and the file name are stored in a variable called <code>ARGV</code>. For example, if I run <code>ruby file.rb what's up doc</code>, <code>ARGV</code> will equal <code>["what's", "up", "doc"]</code>. And <code>ARV[0]</code> will equal <code>"what's"</code>.</p>
+
+<h3>Building the Program</h3>
+
+<p>The first challenge in my generator, which I&rsquo;ll call <code>bunny-methods.rb</code>, is to take the file name argument and <code>touch</code> the file as usual. There are a few different ways to do this: I&rsquo;ll go through the system, because I want more practice interacting with Terminal through my Ruby programs:
+<code>ruby
+file_name = ARGV[0]
+system("touch #{file_name}")
+</code></p>
+
+<p>So, <code>bunny-methods.rb</code> takes the first command-line argument – <code>ARGV[0]</code> – and creates a file with that name. But this file is still empty. Now I want to take the remaining command-line arguments and create empty methods inside of my new file.
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">method_names</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="o">]&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;open(file_name, &amp;lsquo;w&amp;rsquo;) do |f|</span>
+</span><span class='line'><span class="sr">  method_names.each_with_index do |method, i|</span>
+</span><span class='line'><span class="sr">    f &amp;lt;&amp;lt; &amp;ldquo;\n\n&amp;rdquo; if i != 0</span>
+</span><span class='line'><span class="sr">    f &amp;lt;&amp;lt; &amp;ldquo;def </span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="sr">\nend&amp;rdquo;</span>
+</span><span class='line'><span class="sr">  end</span>
+</span><span class='line'><span class="sr">end</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>If I run <code>ruby bunny-methods.rb new_file.rb method1 method2</code>, I get a new file <code>new_file.rb</code> with the contents:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">method1</span>
+</span><span class='line'><span class="k">end</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;def method2</span>
+</span><span class='line'><span class="sr">end</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>Success!</h3>
+
+<p><img src="http://media.giphy.com/media/1305AEqeMd0GNG/giphy.gif" width="300" alt="Bunnies!" /></p>
+]]></content>
+  </entry>
+  
+</feed>
