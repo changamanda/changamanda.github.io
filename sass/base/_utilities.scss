@@ -2,6 +2,9 @@
 	width: $property;
 	height: $property;
 }
+@mixin reset-shadow-box() {
+  @include shadow-box(0px, 0px, 0px);
+}
 @mixin user-select($select){
 	-moz-user-select: $select;
 	-khtml-user-select: $select;
