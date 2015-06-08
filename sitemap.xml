@@ -43,4 +43,10 @@
   <url>
     <loc>http://computerwalksintobar.com/blog/categories/media/</loc>
   </url>
+  <url>
+    <loc>http://computerwalksintobar.com/blog/categories/technical/</loc>
+  </url>
+  <url>
+    <loc>http://computerwalksintobar.com/blog/categories/ruby/</loc>
+  </url>
 </urlset>

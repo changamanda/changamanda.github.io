@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | A Computer Walks Into A Bar]]></title>
+  <link href="http://computerwalksintobar.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://computerwalksintobar.com/"/>
+  <updated>2015-06-08T14:21:39-04:00</updated>
+  <id>http://computerwalksintobar.com/</id>
+  <author>
+    <name><![CDATA[Amanda Chang]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Procs for Sorting in Ruby – Part One]]></title>
+    <link href="http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one/"/>
+    <updated>2015-06-08T14:00:04-04:00</updated>
+    <id>http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one</id>
+    <content type="html"><![CDATA[<h2>What is a Proc, Anyway?</h2>
+
+<p>According to the Ruby documentation, &ldquo;Proc objects are blocks of code that have been bound to a set of local variables. Once bound, the code may be called in different contexts and still access those variables.&rdquo; But what does that really <em>mean</em>?</p>
+
+<p><img src="http://media.giphy.com/media/zkSFsZpQMZuG4/giphy.gif" alt="Huh?" /></p>
+
+<p>Let&rsquo;s do some experimentation with Procs.</p>
+
+<pre><code class="ruby">proc = Proc.new{ |phrase| phrase.upcase }
+  =&gt; #&lt;Proc:0x007f99a20904c8@(irb):1&gt; 
+
+proc.call("hello!")
+  =&gt; "HELLO!"
+</code></pre>
+
+<p>So it looks like a proc is a set of instructions inside of a variable. If I run the <code>#call</code> method on the proc, the arguments that I pass into <code>#call</code> will be passed into the block. Since I entered <code>proc.call("hello!")</code>, Ruby returned <code>"hello!".upcase</code>. Likewise, <code>proc.call("how's it going?")</code> returns <code>"HOW'S IT GOING?"</code>.</p>
+
+<p>Let&rsquo;s try a longer one:</p>
+
+<pre><code class="ruby">capital_split = Proc.new do |phrase|
+  phrase.upcase!
+  phrase.split("")
+end
+  =&gt; #&lt;Proc:0x007fb182859ce8@(irb):1&gt;
+
+capital_split.call("bingo")
+  =&gt; ["B", "I", "N", "G", "O"]
+</code></pre>
+
+<p>Again, whatever we pass into <code>#call</code> gets passed into our block. This is starting to make sense!</p>
+
+<h2>Normalizing Ruby Blocks</h2>
+
+<p>One important use of procs is their ability to set a <em>default block</em> for a Ruby method. Consider the method <code>#do_something</code> that takes a word and passes it into a block:</p>
+
+<pre><code class="ruby">def do_something(word)
+  yield(word)
+end
+
+do_something("hello"){ |word| word.capitalize }
+  =&gt; "Hello" 
+</code></pre>
+
+<p>But what if we want <code>#do_something</code> to capitalize its argument if if we don&rsquo;t call it with a block. As it stands, we&rsquo;ll get an error if we try to call <code>#do_something</code> without a block:</p>
+
+<pre><code class="ruby">do_something("hello")
+LocalJumpError: no block given (yield)
+</code></pre>
+
+<p>If we pass in another argument that starts with <code>&amp;</code>, our block gets captured in that variable, as a proc. So we can rewrite our <code>#do_something</code> method as:</p>
+
+<pre><code class="ruby">def do_something(word, &amp;block)
+  block.call(word)
+end
+
+do_something("hello"){ |word| word.capitalize }
+  =&gt; "Hello"
+
+do_something("hello")
+NoMethodError: undefined method `call' for nil:NilClass
+</code></pre>
+
+<p>Now, setting a default block is a breeze:</p>
+
+<pre><code class="ruby">def do_something(word, &amp;block)
+  normalized_block = block || Proc.new{ |word| word.capitalize }
+  normalized_block.call(word)
+end
+
+do_something("hello")
+  =&gt; "Hello" 
+do_something("hello"){ |word| word.capitalize }
+  =&gt; "Hello" 
+do_something("hello"){ |word| word.upcase }
+  =&gt; "HELLO"
+</code></pre>
+
+<p>POWERFUL! Next time, we&rsquo;ll use our newfound proc powers to build a sort.</p>
+
+<p><img src="http://media.giphy.com/media/A9grgCQ0Dm012/giphy.gif" alt="Power" /></p>
+]]></content>
+  </entry>
+  
+</feed>
