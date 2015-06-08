@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://changamanda.github.io/blog/2015/05/13/balancing-beauty-and-the-technological-world/</loc>
+    <loc>http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one/</loc>
+    <lastmod>2015-06-08T14:00:04-04:00</lastmod>
+  </url>
+  <url>
+    <loc>http://computerwalksintobar.com/blog/2015/05/13/balancing-beauty-and-the-technological-world/</loc>
     <lastmod>2015-05-13T12:03:15-04:00</lastmod>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code/</loc>
+    <loc>http://computerwalksintobar.com/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code/</loc>
     <lastmod>2015-03-14T20:14:43-04:00</lastmod>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/2015/03/14/hackers-and-theater-makers/</loc>
+    <loc>http://computerwalksintobar.com/blog/2015/03/14/hackers-and-theater-makers/</loc>
     <lastmod>2015-03-14T15:21:07-04:00</lastmod>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/</loc>
+    <loc>http://computerwalksintobar.com/blog/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/archives/</loc>
+    <loc>http://computerwalksintobar.com/archives/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/</loc>
+    <loc>http://computerwalksintobar.com/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/archives/</loc>
+    <loc>http://computerwalksintobar.com/blog/archives/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/contact/</loc>
+    <loc>http://computerwalksintobar.com/contact/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/about/</loc>
+    <loc>http://computerwalksintobar.com/about/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/categories/flatiron/</loc>
+    <loc>http://computerwalksintobar.com/blog/categories/flatiron/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/categories/lessons/</loc>
+    <loc>http://computerwalksintobar.com/blog/categories/lessons/</loc>
   </url>
   <url>
-    <loc>http://changamanda.github.io/blog/categories/media/</loc>
+    <loc>http://computerwalksintobar.com/blog/categories/media/</loc>
   </url>
 </urlset>

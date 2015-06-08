@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[A Computer Walks Into A Bar]]></title>
-  <link href="http://changamanda.github.io/atom.xml" rel="self"/>
-  <link href="http://changamanda.github.io/"/>
-  <updated>2015-05-13T15:04:11-04:00</updated>
-  <id>http://changamanda.github.io/</id>
+  <link href="http://computerwalksintobar.com/atom.xml" rel="self"/>
+  <link href="http://computerwalksintobar.com/"/>
+  <updated>2015-06-08T14:21:02-04:00</updated>
+  <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
     
@@ -13,11 +13,146 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Understanding Procs for Sorting in Ruby – Part One]]></title>
+    <link href="http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one/"/>
+    <updated>2015-06-08T14:00:04-04:00</updated>
+    <id>http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one</id>
+    <content type="html"><![CDATA[<h2>What is a Proc, Anyway?</h2>
+
+<p>According to the Ruby documentation, &ldquo;Proc objects are blocks of code that have been bound to a set of local variables. Once bound, the code may be called in different contexts and still access those variables.&rdquo; But what does that really <em>mean</em>?</p>
+
+<p><img src="http://media.giphy.com/media/zkSFsZpQMZuG4/giphy.gif" alt="Huh?" /></p>
+
+<p>Let&rsquo;s do some experimentation with Procs.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">proc</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span> <span class="o">|</span><span class="n">phrase</span><span class="o">|</span> <span class="n">phrase</span><span class="o">.</span><span class="n">upcase</span> <span class="p">}</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="c1">#&lt;Proc:0x007f99a20904c8@(irb):1&gt; </span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">proc</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;hello!&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="s2">&quot;HELLO!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So it looks like a proc is a set of instructions inside of a variable. If I run the <code>#call</code> method on the proc, the arguments that I pass into <code>#call</code> will be passed into the block. Since I entered <code>proc.call("hello!")</code>, Ruby returned <code>"hello!".upcase</code>. Likewise, <code>proc.call("how's it going?")</code> returns <code>"HOW'S IT GOING?"</code>.</p>
+
+<p>Let&rsquo;s try a longer one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">capital_split</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">phrase</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">phrase</span><span class="o">.</span><span class="n">upcase!</span>
+</span><span class='line'>  <span class="n">phrase</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="c1">#&lt;Proc:0x007fb182859ce8@(irb):1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">capital_split</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;bingo&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, whatever we pass into <code>#call</code> gets passed into our block. This is starting to make sense!</p>
+
+<h2>Normalizing Ruby Blocks</h2>
+
+<p>One important use of procs is their ability to set a <em>default block</em> for a Ruby method. Consider the method <code>#do_something</code> that takes a word and passes it into a block:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">yield</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">){</span> <span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span> <span class="p">}</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="s2">&quot;Hello&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But what if we want <code>#do_something</code> to capitalize its argument if if we don&rsquo;t call it with a block. As it stands, we&rsquo;ll get an error if we try to call <code>#do_something</code> without a block:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="ss">LocalJumpError</span><span class="p">:</span> <span class="n">no</span> <span class="n">block</span> <span class="n">given</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If we pass in another argument that starts with <code>&amp;</code>, our block gets captured in that variable, as a proc. So we can rewrite our <code>#do_something</code> method as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">block</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">){</span> <span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span> <span class="p">}</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="ss">NoMethodError</span><span class="p">:</span> <span class="n">undefined</span> <span class="nb">method</span> <span class="sb">`call&#39; for nil:NilClass</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, setting a default block is a breeze:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">normalized_block</span> <span class="o">=</span> <span class="n">block</span> <span class="o">||</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span> <span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">normalized_block</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">){</span> <span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span> <span class="p">}</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="s2">&quot;Hello&quot;</span>
+</span><span class='line'><span class="n">do_something</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">){</span> <span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="o">.</span><span class="n">upcase</span> <span class="p">}</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="s2">&quot;HELLO&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>POWERFUL! Next time, we&rsquo;ll use our newfound proc powers to build a sort.</p>
+
+<p><img src="http://media.giphy.com/media/A9grgCQ0Dm012/giphy.gif" alt="Power" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Balancing Beauty and the Technological World]]></title>
-    <link href="http://changamanda.github.io/blog/2015/05/13/balancing-beauty-and-the-technological-world/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/05/13/balancing-beauty-and-the-technological-world/"/>
     <updated>2015-05-13T12:03:15-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/05/13/balancing-beauty-and-the-technological-world</id>
-    <content type="html"><![CDATA[<p><img src="http://changamanda.github.io/images/stars.png"></p>
+    <id>http://computerwalksintobar.com/blog/2015/05/13/balancing-beauty-and-the-technological-world</id>
+    <content type="html"><![CDATA[<p><img src="http://computerwalksintobar.com/images/stars.png"></p>
 
 <p>Last week, I went stargazing.</p>
 
@@ -45,21 +180,18 @@
 
 <p>&ldquo;Mom,&rdquo; Madison said. &ldquo;It&rsquo;s just a picture.&rdquo;</p></blockquote>
 
-<center><img src="http://changamanda.github.io/images/madison.png" width="300"><br><em>Madison Holleran&#8217;s Instagram</em></center>
-
-
 <p>As we maintain our Facebook and Instagram accounts, we generally only share the positive aspects of our lives, the parts we <em>want</em> to broadcast. This creates a problem when we start to contrast our lives – and all of the problems within them – and the seemingly-perfect &ldquo;lives&rdquo; that our friends display. We begin to feel alone in our mixed emotions; we forget that sadness, like joy, is universal.</p>
 
-<center><img src="http://changamanda.github.io/images/insta.png" width="400"><br><em>My latest Instagram photo – my filtered life</em></center>
+<center><img src="http://computerwalksintobar.com/images/insta.png" width="400"><br><em>My latest Instagram photo – my filtered life</em></center>
 
 
-<p>The <em>ESPN</em> article compares this occurence to Instagram itself:</p>
+<p>The <em>ESPN</em> article compares this phenomenon to Instagram itself:</p>
 
 <blockquote><p>With Instagram, one thing has changed: the amount we consume of one another&rsquo;s edited lives. Young women growing up on Instagram are spending a significant chunk of each day absorbing others&#8217; filtered images while they walk through their own realities, unfiltered. In a recent survey conducted by the Girl Scouts, nearly 74 percent of girls agreed that other girls tried to make themselves look &ldquo;cooler than they are&rdquo; on social networking sites.</p></blockquote>
 
 <p>I&rsquo;m not preaching against Instagram – I have fun documenting as much as the next person. But I think we should work a little harder to spread awareness that Instagram real is not <em>real</em> real. And we should remember that anything in excess is dangerous; social media is no exception.</p>
 
-<center><img src="http://changamanda.github.io/images/unfiltered.png" width="400"></center>
+<center><img src="http://computerwalksintobar.com/images/unfiltered.png" width="400"></center>
 
 
 <h2>Being Responsible Consumers</h2>
@@ -73,7 +205,7 @@
 <center>&#8212;</center>
 
 
-<p>While discussing this topic with a friend the other day, he pointed out an interesting phenomenon. On the F train in Brooklyn, there&rsquo;s a point at which the train comes above ground. If you look out the window, you can see the Statue of Liberty. And the kids do – while the adults always pull out their phones to start texting.</p>
+<p>While discussing this topic with a friend the other day, he pointed out an interesting phenomenon. On the F train in Brooklyn, there&rsquo;s a point at which the train comes above ground. If you look out the window, you can see the Statue of Liberty. And the kids do – while the adults always pull out their phones.</p>
 
 <p>Just like anything, consuming technology (even for us engineers) is all about balance. So I&rsquo;m issuing myself a challenge: to notice one new thing each day. Feel free to join me :) We can strive for a future full of innovation – but let&rsquo;s try not to forget beauty.</p>
 ]]></content>
@@ -81,9 +213,9 @@
   
   <entry>
     <title type="html"><![CDATA[What I've Learned About Life Through Teaching Adults To Code]]></title>
-    <link href="http://changamanda.github.io/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code/"/>
     <updated>2015-03-14T20:14:43-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code</id>
+    <id>http://computerwalksintobar.com/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code</id>
     <content type="html"><![CDATA[<p><img src="http://i.imgur.com/EKbG8et.jpg" alt="Dance Lesson at Flatiron!" /></p>
 
 <p>Yesterday marks the end of my eighth week as a web development instructor at the <a href="http://flatironschool.com/">Flatiron School</a>. I feel immensely lucky for the chance to work with such a driven group of coworkers and students &ldquo;<a href="https://twitter.com/aviflombaum/status/575456180455124992">to align education with reality</a>.&rdquo; In honor of this two-month-iversary, here are a few things I&rsquo;ve learned:</p>
@@ -114,9 +246,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hackers and Theater-Makers]]></title>
-    <link href="http://changamanda.github.io/blog/2015/03/14/hackers-and-theater-makers/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/03/14/hackers-and-theater-makers/"/>
     <updated>2015-03-14T15:21:07-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/03/14/hackers-and-theater-makers</id>
+    <id>http://computerwalksintobar.com/blog/2015/03/14/hackers-and-theater-makers</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on the <a href="http://blog.flatironschool.com/hackers-and-theater-makers-code-as-a-creative/">Flatiron School Blog</a>.</em></p>
 
 <p>When I decided to enroll at the <a href="http://flatironschool.com/">Flatiron School</a> and shift my career from theater lighting design to web development, I worried unnecessarily that I would lose my drive to create. In practice, I constantly meet other developers with creative passions. My mentor, who I met through the <a href="http://blog.flatironschool.com/post/107229276393/fog-creek-and-the-nyc-web-development-fellowship">Fog Creek Fellowship</a>, is also a musician who keeps guitars in his office. One of my current Flatiron School students used to be a curator. The list goes on.</p>

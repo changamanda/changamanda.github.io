@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: flatiron | A Computer Walks Into A Bar]]></title>
-  <link href="http://changamanda.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
-  <link href="http://changamanda.github.io/"/>
-  <updated>2015-05-13T15:04:11-04:00</updated>
-  <id>http://changamanda.github.io/</id>
+  <link href="http://computerwalksintobar.com/blog/categories/flatiron/atom.xml" rel="self"/>
+  <link href="http://computerwalksintobar.com/"/>
+  <updated>2015-06-08T14:21:02-04:00</updated>
+  <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Balancing Beauty and the Technological World]]></title>
-    <link href="http://changamanda.github.io/blog/2015/05/13/balancing-beauty-and-the-technological-world/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/05/13/balancing-beauty-and-the-technological-world/"/>
     <updated>2015-05-13T12:03:15-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/05/13/balancing-beauty-and-the-technological-world</id>
+    <id>http://computerwalksintobar.com/blog/2015/05/13/balancing-beauty-and-the-technological-world</id>
     <content type="html"><![CDATA[<p><img src="/images/stars.png"></p>
 
 <p>Last week, I went stargazing.</p>
@@ -46,15 +46,12 @@
 
 <p>&ldquo;Mom,&rdquo; Madison said. &ldquo;It&rsquo;s just a picture.&rdquo;</p></blockquote>
 
-<center><img src="/images/madison.png" width="300"><br><em>Madison Holleran&#8217;s Instagram</em></center>
-
-
 <p>As we maintain our Facebook and Instagram accounts, we generally only share the positive aspects of our lives, the parts we <em>want</em> to broadcast. This creates a problem when we start to contrast our lives – and all of the problems within them – and the seemingly-perfect &ldquo;lives&rdquo; that our friends display. We begin to feel alone in our mixed emotions; we forget that sadness, like joy, is universal.</p>
 
 <center><img src="/images/insta.png" width="400"><br><em>My latest Instagram photo – my filtered life</em></center>
 
 
-<p>The <em>ESPN</em> article compares this occurence to Instagram itself:</p>
+<p>The <em>ESPN</em> article compares this phenomenon to Instagram itself:</p>
 
 <blockquote><p>With Instagram, one thing has changed: the amount we consume of one another&rsquo;s edited lives. Young women growing up on Instagram are spending a significant chunk of each day absorbing others&#8217; filtered images while they walk through their own realities, unfiltered. In a recent survey conducted by the Girl Scouts, nearly 74 percent of girls agreed that other girls tried to make themselves look &ldquo;cooler than they are&rdquo; on social networking sites.</p></blockquote>
 
@@ -74,7 +71,7 @@
 <center>&#8212;</center>
 
 
-<p>While discussing this topic with a friend the other day, he pointed out an interesting phenomenon. On the F train in Brooklyn, there&rsquo;s a point at which the train comes above ground. If you look out the window, you can see the Statue of Liberty. And the kids do – while the adults always pull out their phones to start texting.</p>
+<p>While discussing this topic with a friend the other day, he pointed out an interesting phenomenon. On the F train in Brooklyn, there&rsquo;s a point at which the train comes above ground. If you look out the window, you can see the Statue of Liberty. And the kids do – while the adults always pull out their phones.</p>
 
 <p>Just like anything, consuming technology (even for us engineers) is all about balance. So I&rsquo;m issuing myself a challenge: to notice one new thing each day. Feel free to join me :) We can strive for a future full of innovation – but let&rsquo;s try not to forget beauty.</p>
 ]]></content>
@@ -82,9 +79,9 @@
   
   <entry>
     <title type="html"><![CDATA[What I've Learned About Life Through Teaching Adults To Code]]></title>
-    <link href="http://changamanda.github.io/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code/"/>
     <updated>2015-03-14T20:14:43-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code</id>
+    <id>http://computerwalksintobar.com/blog/2015/03/14/what-ive-learned-about-life-through-teaching-adults-to-code</id>
     <content type="html"><![CDATA[<p><img src="http://i.imgur.com/EKbG8et.jpg" alt="Dance Lesson at Flatiron!" /></p>
 
 <p>Yesterday marks the end of my eighth week as a web development instructor at the <a href="http://flatironschool.com/">Flatiron School</a>. I feel immensely lucky for the chance to work with such a driven group of coworkers and students &ldquo;<a href="https://twitter.com/aviflombaum/status/575456180455124992">to align education with reality</a>.&rdquo; In honor of this two-month-iversary, here are a few things I&rsquo;ve learned:</p>
@@ -115,9 +112,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hackers and Theater-Makers]]></title>
-    <link href="http://changamanda.github.io/blog/2015/03/14/hackers-and-theater-makers/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/03/14/hackers-and-theater-makers/"/>
     <updated>2015-03-14T15:21:07-04:00</updated>
-    <id>http://changamanda.github.io/blog/2015/03/14/hackers-and-theater-makers</id>
+    <id>http://computerwalksintobar.com/blog/2015/03/14/hackers-and-theater-makers</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on the <a href="http://blog.flatironschool.com/hackers-and-theater-makers-code-as-a-creative/">Flatiron School Blog</a>.</em></p>
 
 <p>When I decided to enroll at the <a href="http://flatironschool.com/">Flatiron School</a> and shift my career from theater lighting design to web development, I worried unnecessarily that I would lose my drive to create. In practice, I constantly meet other developers with creative passions. My mentor, who I met through the <a href="http://blog.flatironschool.com/post/107229276393/fog-creek-and-the-nyc-web-development-fellowship">Fog Creek Fellowship</a>, is also a musician who keeps guitars in his office. One of my current Flatiron School students used to be a curator. The list goes on.</p>
