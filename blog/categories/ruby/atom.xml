@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | A Computer Walks Into A Bar]]></title>
   <link href="http://computerwalksintobar.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://computerwalksintobar.com/"/>
-  <updated>2015-06-08T15:13:22-04:00</updated>
+  <updated>2015-06-09T16:07:13-04:00</updated>
   <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -12,6 +12,102 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Procs for Sorting in Ruby – Part Two]]></title>
+    <link href="http://computerwalksintobar.com/blog/2015/06/09/understanding-procs-for-sorting-in-ruby-part-two/"/>
+    <updated>2015-06-09T15:11:17-04:00</updated>
+    <id>http://computerwalksintobar.com/blog/2015/06/09/understanding-procs-for-sorting-in-ruby-part-two</id>
+    <content type="html"><![CDATA[<h2>Recap</h2>
+
+<p><a href="http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one/">Last time</a>, we discussed procs and how to use them to set default blocks for Ruby methods.</p>
+
+<p>A reminder:</p>
+
+<pre><code class="ruby">def do_something(word, &amp;block)
+  normalized_block = block || Proc.new{ |word| word.capitalize }
+  normalized_block.call(word)
+end
+
+do_something("hello")
+  =&gt; "Hello" 
+do_something("hello"){ |word| word.capitalize }
+  =&gt; "Hello" 
+do_something("hello"){ |word| word.upcase }
+  =&gt; "HELLO"
+</code></pre>
+
+<p><br><center><img class="<a" src="href="http://media0.giphy.com/media/gtmEIOOOHVgHK/giphy.gif">http://media0.giphy.com/media/gtmEIOOOHVgHK/giphy.gif</a>&#8221;></center></p>
+
+<h2>Insertion Sort – Integers</h2>
+
+<p>According to <a href="http://en.wikipedia.org/wiki/Insertion_sort">Wikipedia</a>, insertion sort &ldquo;is a simple sorting algorithm that builds the final sorted array (or list) one item at a time.&rdquo; Essentially, insertion sort works by keeping track of a sorted sub-list, and placing each element in the correct position in that sorted sub-list.</p>
+
+<p>First, let&rsquo;s implement insertion sort with simple integers in ascending order.</p>
+
+<p>So if we implement a method that inserts an element at the correct place in a sorted array, this sort should be easy. If the element is less than or equal to any other element in the sorted array, we should insert the new element before this existing element; otherwise, we should put the new element at the end:</p>
+
+<pre><code class="ruby">def insert_in_right_place(sorted_list, element)
+  sorted_list.each_with_index do |list_el, i|
+    return sorted_list.insert(i, element) if element &lt;= list_el
+  end
+  sorted_list &lt;&lt; element
+end
+</code></pre>
+
+<p>Again, to sort an array of integers, we just have to iterate through it, placing each element in the sorted sub-list:</p>
+
+<pre><code class="ruby">def sort(array)
+  sorted = []
+  array.each do |element|
+    sorted = insert_in_right_place(sorted, element)
+  end
+  sorted
+end
+</code></pre>
+
+<p>This can be refactored as:</p>
+
+<pre><code class="ruby">def sort(array)
+  array.inject([]) { |sorted, element| insert_in_right_place(sorted, element) }
+end
+</code></pre>
+
+<h2>Sort By Condition</h2>
+
+<p>But what if we want to sort by an optional, user-entered block? ENTER: PROCS.</p>
+
+<p>In Ruby, the spaceship operator <code>a &lt;=&gt; b</code> compares two items, returning 1 if <code>a &gt; b</code>, 0 if <code>a == b</code>, and -1 if <code>a &lt; b</code>. For example, <code>3 &lt;=&gt; 2</code> returns 1, whereas <code>2 &lt;=&gt; 3</code> returns -1. <code>2 &lt;=&gt; 2</code> returns 0.</p>
+
+<p>Let&rsquo;s give our sort an optional block variable <code>&amp;block</code>, so the user can enter his or her own sorting condition. The default condition should be the typical <code>a &lt;=&gt; b</code> comparison. Now, <code>#sort</code> becomes:</p>
+
+<pre><code class="ruby">def sort(array, &amp;block)
+  normalized_block = block || Proc.new{|a, b| a &lt;=&gt; b}
+  array.inject([]) { |sorted, element| insert_in_right_place(sorted, element, normalized_block) }
+end
+</code></pre>
+
+<p>This block becomes what we <strong>check</strong> in <code>#insert_in_right_place</code>, which becomes:</p>
+
+<pre><code class="ruby">def insert_in_right_place(sorted_list, element, block)
+  sorted_list.each_with_index do |list_el, i|
+    return sorted_list.insert(i, element) if block.call(element, list_el) &lt; 1
+  end
+  sorted_list &lt;&lt; element
+end
+</code></pre>
+
+<p>So let&rsquo;s try some examples:</p>
+
+<pre><code class="ruby">["aardvark", "deer", "elephant", "blowfish", "hamster", "crocodile", "cat"].sort
+  =&gt; ["aardvark", "blowfish", "cat", "crocodile", "deer", "elephant", "hamster"] 
+["deer", "blowfish", "hamster", "crocodile", "cat"].sort{ |a, b| a[1] &lt;=&gt; b[1] }
+  =&gt; ["cat", "hamster", "deer", "blowfish", "crocodile"] 
+</code></pre>
+
+<p><br><center><img class="<a" src="href="http://media.giphy.com/media/JdCz7YXOZAURq/giphy.gif">http://media.giphy.com/media/JdCz7YXOZAURq/giphy.gif</a>&#8221;></center></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Understanding Procs for Sorting in Ruby – Part One]]></title>
@@ -22,7 +118,8 @@
 
 <p>According to the Ruby documentation, &ldquo;Proc objects are blocks of code that have been bound to a set of local variables. Once bound, the code may be called in different contexts and still access those variables.&rdquo; But what does that really <em>mean</em>?</p>
 
-<p><img src="http://media.giphy.com/media/zkSFsZpQMZuG4/giphy.gif" alt="Huh?" /></p>
+<center><img src="http://media.giphy.com/media/zkSFsZpQMZuG4/giphy.gif"></center>
+
 
 <p>Let&rsquo;s do some experimentation with Procs.</p>
 
@@ -97,7 +194,8 @@ do_something("hello"){ |word| word.upcase }
 
 <p>POWERFUL! Next time, we&rsquo;ll use our newfound proc powers to build a sort.</p>
 
-<p><img src="http://media.giphy.com/media/A9grgCQ0Dm012/giphy.gif" alt="Power" /></p>
+<center><img src="http://media.giphy.com/media/A9grgCQ0Dm012/giphy.gif"></center>
+
 ]]></content>
   </entry>
   
