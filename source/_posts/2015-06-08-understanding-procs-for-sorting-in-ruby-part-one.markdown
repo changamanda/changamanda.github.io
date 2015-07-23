@@ -3,14 +3,14 @@ layout: post
 title: "Understanding Procs for Sorting in Ruby – Part One"
 date: 2015-06-08 14:00:04 -0400
 comments: true
-categories: 
+categories: technical ruby
 ---
 
 ## What is a Proc, Anyway?
 
 According to the Ruby documentation, "Proc objects are blocks of code that have been bound to a set of local variables. Once bound, the code may be called in different contexts and still access those variables." But what does that really _mean_?
 
-![Huh?](http://media.giphy.com/media/zkSFsZpQMZuG4/giphy.gif)
+<center>{% img http://media.giphy.com/media/zkSFsZpQMZuG4/giphy.gif %}</center>
 
 Let's do some experimentation with Procs.
 
@@ -91,4 +91,4 @@ do_something("hello"){ |word| word.upcase }
 
 POWERFUL! Next time, we'll use our newfound proc powers to build a sort.
 
-![Power](http://media.giphy.com/media/A9grgCQ0Dm012/giphy.gif)
+<center>{% img http://media.giphy.com/media/A9grgCQ0Dm012/giphy.gif %}</center>
