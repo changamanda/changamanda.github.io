@@ -60,7 +60,7 @@ Naming the backwards steps is a little trickier. For example, at what point is a
 
 2. __Communication__. State diagrams can help us communicate the way systems will be laid out to non-technical team members.
 
-3. __Organizaiton__. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.
+3. __Organization__. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.
 
 Hope you've enjoyed this simple example!
 
