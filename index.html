@@ -53,7 +53,7 @@
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2015/07/23/exploring-state-machines-in-ruby/">
+			<a href="/blog/2015/07/23/exploring-state-machines/">
 			
 				Exploring State Diagrams</a>
 		</h2>
@@ -132,7 +132,7 @@
 <ol>
 <li><p><strong>Simplicity</strong>. State diagrams allow us to represent the way that objects evolve as certain actions occur. Since information is represented visually, we can more easily point out its flaws – for example, we might decide that a Movie <em>cannot</em> move from Production back to Pre-Production, because the Production state will deplete some of the movie&rsquo;s funding. We may need to rerun <code>develop_and_fund</code> before we can return to the Pre-Production state.</p></li>
 <li><p><strong>Communication</strong>. State diagrams can help us communicate the way systems will be laid out to non-technical team members.</p></li>
-<li><p><strong>Organizaiton</strong>. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.</p></li>
+<li><p><strong>Organization</strong>. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.</p></li>
 </ol>
 
 

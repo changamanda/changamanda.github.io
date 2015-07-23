@@ -4,7 +4,7 @@
   <title><![CDATA[A Computer Walks Into A Bar]]></title>
   <link href="http://computerwalksintobar.com/atom.xml" rel="self"/>
   <link href="http://computerwalksintobar.com/"/>
-  <updated>2015-07-23T11:51:58-04:00</updated>
+  <updated>2015-07-23T11:54:10-04:00</updated>
   <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -14,9 +14,9 @@
   
   <entry>
     <title type="html"><![CDATA[Exploring State Diagrams]]></title>
-    <link href="http://computerwalksintobar.com/blog/2015/07/23/exploring-state-machines-in-ruby/"/>
+    <link href="http://computerwalksintobar.com/blog/2015/07/23/exploring-state-machines/"/>
     <updated>2015-07-23T09:56:22-04:00</updated>
-    <id>http://computerwalksintobar.com/blog/2015/07/23/exploring-state-machines-in-ruby</id>
+    <id>http://computerwalksintobar.com/blog/2015/07/23/exploring-state-machines</id>
     <content type="html"><![CDATA[<p>Part of the Flatiron School web development curriculum is a month-long Project Mode, so we as instructors advise the students on modeling their data. We always have the students map out their models and associations before beginning to code, but there are tools besides basic flowcharts that can help a project simplify its data. One of those tools is the <strong>state diagram</strong>.</p>
 
 <h2>What is a State Diagram?</h2>
@@ -77,7 +77,7 @@
 <ol>
 <li><p><strong>Simplicity</strong>. State diagrams allow us to represent the way that objects evolve as certain actions occur. Since information is represented visually, we can more easily point out its flaws – for example, we might decide that a Movie <em>cannot</em> move from Production back to Pre-Production, because the Production state will deplete some of the movie&rsquo;s funding. We may need to rerun <code>develop_and_fund</code> before we can return to the Pre-Production state.</p></li>
 <li><p><strong>Communication</strong>. State diagrams can help us communicate the way systems will be laid out to non-technical team members.</p></li>
-<li><p><strong>Organizaiton</strong>. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.</p></li>
+<li><p><strong>Organization</strong>. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.</p></li>
 </ol>
 
 
