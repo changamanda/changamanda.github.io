@@ -53,6 +53,105 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2015/07/23/exploring-state-machines-in-ruby/">
+			
+				Exploring State Diagrams</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-23T09:56:22-04:00" pubdate data-updated="true"></time></div>
+	</header>
+	<div class="entry-content">
+		<p>Part of the Flatiron School web development curriculum is a month-long Project Mode, so we as instructors advise the students on modeling their data. We always have the students map out their models and associations before beginning to code, but there are tools besides basic flowcharts that can help a project simplify its data. One of those tools is the <strong>state diagram</strong>.</p>
+
+<h2>What is a State Diagram?</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/State_diagram">Wikipedia</a> gives an overview of state diagrams:</p>
+
+<blockquote><p>State diagrams are used to give an abstract description of the behavior of a system. This behavior is analyzed and represented in series of events, that could occur in one or more possible states.</p></blockquote>
+
+<p>Some more research leads to the fact that state diagrams are representations of state machines. Vaidehi Joshi wrote two excellent blog posts that explain <a href="http://vaidehijoshi.github.io/blog/2015/03/17/a-machine-state-of-mind-part-1-understanding-state-machines/">what state machines are</a>, as well as <a href="http://vaidehijoshi.github.io/blog/2015/03/24/a-machine-state-of-mind-part-2-implementing-state-machines/">how to implement them in Ruby</a>. In short:</p>
+
+<blockquote><p>At the risk of sounding a bit philosophical, it all boils down to actions that are taken, and the reasons we take certain actions. State machines are how we keep track of different events, and control the flow between those events.</p></blockquote>
+
+<h2>First State Steps</h2>
+
+<p>In order to get a bit more practice modeling data, I&rsquo;m going to create a state diagram to represent a Movie object. From <a href="https://twitter.com/mrmitchboyer">Mitch Boyer</a>, I received this list of production states:</p>
+
+<blockquote><ul>
+<li>Development: concept, develop screenplay, build core team, funding</li>
+<li>Pre-Production: refine script, build crew, casting, location scouting, contracts, etc.</li>
+<li>Production: shooting the movie</li>
+<li>Post-Production: edit, music/sound mix, VFX, color correct</li>
+<li>Distribution: festival circuit, VOD services (video on demand), etc.</li>
+</ul>
+</blockquote>
+
+<p>That&rsquo;s a lot of information! Time to break it down. I&rsquo;ll start with a simple action – putting each of the five production states into nodes:</p>
+
+<center><img src="http://i.imgur.com/c2T47Yt.png" width="200"></center>
+
+
+<h2>Where Can We Go From Here?</h2>
+
+<p>Rather than try to list all possible transitions between production states in a Movie, I&rsquo;ll attack one node at a time. From the first node (Development), I can move forward one state (Pre-Production). From the second node (Pre-Production), I can move forward one state (Production) or backward one state (Development). I can start to see a pattern – at any point, I can move onto the next state or return to the state that came before. At any point, I can start over and return to the drawing board (Development).</p>
+
+<p>Represented with flowchart arrows, my diagram now looks like this:</p>
+
+<center><img src="http://i.imgur.com/sxHFqBI.png" width="300"></center>
+
+
+<h2>&hellip;And How Do We Get There?</h2>
+
+<p>The next step is to figure out what actions need to be taken to move from one state onto the next one. For me, it helps to think of each state as having an entry gate – what conditions need to be fulfilled for admission to a state?</p>
+
+<p>Let&rsquo;s take the first two nodes – Development and Pre-Production. According to our list, the development stage consists of developing a concept, developing screenplay, building core team, and funding the project. It&rsquo;s impossible to move on <em>without</em> funding and a developed idea; those are the requirements. So if I call an action <code>develop_and_fund</code>, my Movie should be ready for the Pre-Production state.</p>
+
+<p>I can figure out my entry gates for each step forward:</p>
+
+<center><img src="http://i.imgur.com/MKIBCe4.png" width="400"></center>
+
+
+<p>Naming the backwards steps is a little trickier. For example, at what point is a project no longer in Post-Production, but rather in Production again? When we need more footage. The final state diagram looks like this:</p>
+
+<center><img src="http://i.imgur.com/iDkNdzl.png" width="500"></center>
+
+
+<h2>Why Use State Diagrams?</h2>
+
+<ol>
+<li><p><strong>Simplicity</strong>. State diagrams allow us to represent the way that objects evolve as certain actions occur. Since information is represented visually, we can more easily point out its flaws – for example, we might decide that a Movie <em>cannot</em> move from Production back to Pre-Production, because the Production state will deplete some of the movie&rsquo;s funding. We may need to rerun <code>develop_and_fund</code> before we can return to the Pre-Production state.</p></li>
+<li><p><strong>Communication</strong>. State diagrams can help us communicate the way systems will be laid out to non-technical team members.</p></li>
+<li><p><strong>Organizaiton</strong>. Since state machines can only exist in one state at a time, we can easily sort our Movies by progress. Furthermore, we know that API calls to each different state will return mutually exclusive sets of objects.</p></li>
+</ol>
+
+
+<p>Hope you&rsquo;ve enjoyed this simple example!</p>
+
+<center><img src="http://media.giphy.com/media/WxxsVAJLSBsFa/giphy.gif"></center>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2015/06/09/understanding-procs-for-sorting-in-ruby-part-two/">
 			
 				Understanding Procs for Sorting in Ruby – Part Two</a>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://computerwalksintobar.com/blog/2015/07/23/exploring-state-machines-in-ruby/</loc>
+    <lastmod>2015-07-23T09:56:22-04:00</lastmod>
+  </url>
+  <url>
     <loc>http://computerwalksintobar.com/blog/2015/06/09/understanding-procs-for-sorting-in-ruby-part-two/</loc>
     <lastmod>2015-06-09T15:11:17-04:00</lastmod>
   </url>
@@ -52,5 +56,8 @@
   </url>
   <url>
     <loc>http://computerwalksintobar.com/blog/categories/ruby/</loc>
+  </url>
+  <url>
+    <loc>http://computerwalksintobar.com/blog/categories/modeling/</loc>
   </url>
 </urlset>
