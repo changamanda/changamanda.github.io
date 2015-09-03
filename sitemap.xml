@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://computerwalksintobar.com/blog/2015/09/03/using-bootstrap-themes-to-style-your-rails-app/</loc>
+    <lastmod>2015-09-03T14:19:57-04:00</lastmod>
+  </url>
+  <url>
     <loc>http://computerwalksintobar.com/blog/2015/07/23/exploring-state-diagrams/</loc>
     <lastmod>2015-07-23T09:56:22-04:00</lastmod>
   </url>
