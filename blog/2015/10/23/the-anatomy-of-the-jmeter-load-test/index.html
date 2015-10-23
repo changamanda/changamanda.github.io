@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Anatomy of the JMeter Load Test - A Computer Walks Into A Bar</title>
+  <meta name="author" content="Amanda Chang">
+
+  
+  <meta name="description" content="Yesterday, my boss told me to write load tests for an endpoint in our Rails application. At first, I was all like: But once I delved into the world &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://computerwalksintobar.com/blog/2015/10/23/the-anatomy-of-the-jmeter-load-test">
+  <link href="/favicon.ico" rel="icon">
+  
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="A Computer Walks Into A Bar" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+  <h1>A Computer Walks Into A Bar</h1>
+  
+    <h2><a href="/">AC</a></h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:computerwalksintobar.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Anatomy of the JMeter Load Test</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-23T13:52:33-05:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Yesterday, my boss told me to write load tests for an endpoint in our Rails application. At first, I was all like:</p>
+
+<center><img src="https://media.giphy.com/media/v6bWA3jIqyamQ/giphy.gif" width="300"></center>
+
+
+<p>But once I delved into the world of Apache JMeter, I realized that my knowledge of web requests would make understanding load testing a piece of cake.</p>
+
+<center><img src="https://media.giphy.com/media/TPOjURhuAenII/giphy.gif" width="300"></center>
+
+
+<h2>Setup</h2>
+
+<p>In order to gain a better understanding of JMeter, I wanted to write load tests for the simplest type of Rails app – a Rails scaffold. Let&rsquo;s set up our trusty Cat App:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rails new cat-app
+</span><span class='line'>cd cat-app
+</span><span class='line'>rails g scaffold cat name
+</span><span class='line'>rails s -p 8080</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For the most part, this post assumes that you&rsquo;ve been able to set up JMeter with your Rails app. In a nutshell, I added the location of the JMeter <code>bin</code> directory to my <code>PATH</code>, and then launched JMeter with the local host as <code>-Jhostname</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=~/Development/apache-jmeter-2.13/bin:$PATH
+</span><span class='line'>JVM_ARGS="-Xms512m -Xmx2048m" && jmeter -Jhostname=127.0.0.1</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Testing Components</h2>
+
+<p>To start testing the app, I added a Thread Group called Basic App Calls to the Test Plan (by right-clicking on Test Plan in the sidebar). Then, I added a Loop Controller called Cats to the Test Plan, and set the Loop Count to 10. All of the HTTP Requests that I tested were contained under the Cats Loop Controller.</p>
+
+<p>I also added an HTTP Cookie Manager and a Summary Report to the Basic App Calls Thread Group.</p>
+
+<h2>The Simplest Case</h2>
+
+<p>Let&rsquo;s start with our <code>cats#index</code> test. We shouldn&rsquo;t need to pass any parameters into this request – all we have to do is visit <code>/cats</code>.</p>
+
+<p>Rails set up this controller test:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>test "should get index" do
+</span><span class='line'>  get :index
+</span><span class='line'>  assert_response :success
+</span><span class='line'>  assert_not_nil assigns(:cats)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So in order to test that this call works correctly, we just have to set up the correct HTTP Request Sampler under the Cats Loop Controller.</p>
+
+<p>Under Server Name we&rsquo;ll use our <code>localhost</code>, which gets entered as <code>${__P(hostname,)}</code>. We&rsquo;re running on port 8080, which we also need to specify.</p>
+
+<p>Under HTTP Request, let&rsquo;s set the method to GET and the path to <code>/cats</code>. The final settings look like this:</p>
+
+<center><img src="http://i.imgur.com/k9KSbsm.png" width="600"></center>
+
+
+<p>If we run our tests, we should see the request successfully hit the server and return a 200 status code. Easy!</p>
+
+<h2>Rails Authenticity Tokens</h2>
+
+<p>Now that we&rsquo;ve created a simple load test, we&rsquo;ll want to actually create a cat to test with. First off, we can set the settings, which are self-explanatory enough: Server Name <code>${__P(hostname,)}</code>, Port Number <code>8080</code>, HTTP Request <code>POST</code>, and Path <code>/cats</code>.</p>
+
+<p>We know that we&rsquo;ll need to post some data with our request – luckily, the HTTP Request section includes a list of parameters. Let&rsquo;s add <code>cat[name]</code> as the Name, and a good name for a cat as the Value. I chose <code>Meow</code>.</p>
+
+<p>However, if we run the tests, the summary report shows an 100% error percentage for Create Cat. If we look at the error in Terminal, we can see that the <code>POST</code> request returned a <code>422 Unprocessable Entity</code> status code and a <code>Can't verify CSRF token authenticity</code> error. This makes sense – we know that we can&rsquo;t post to a form in Rails without an authenticity token.</p>
+
+<p>Luckily, with a little creativity, we can grab that token from another HTTP Request Sampler. Let&rsquo;s set up an HTTP Request for <code>cats#new</code>: Server Name <code>${__P(hostname,)}</code>, Port Number <code>8080</code>, HTTP Request <code>GET</code>, and Path <code>/cats/new</code>.</p>
+
+<center><img src="http://i.imgur.com/EiIUKIS.png" width="600"></center>
+
+
+<p>When I opened up <code>http://localhost:8080/cats/new</code>, I could see that the form had an input tag: <code>&lt;input type="hidden" name="authenticity_token" value="TOKEN_HERE"&gt;</code>. I wanted to grab that token and pass it into my <code>POST</code> params, which I could do with a Regular Expression Extractor nested under my <code>new</code> HTTP request. The Regex Extractor looks like this:</p>
+
+<center><img src="http://i.imgur.com/s5xXg7N.png" width="600"></center>
+
+
+<p>Whatever is within the parentheses gets captured and stored in a variable <code>FORM_AUTH_TOKEN</code>. So now, we&rsquo;ll want to add another parameter to our <code>POST</code> request – Name: <code>authenticity_token</code>, Value: <code>${FORM_AUTH_TOKEN}</code>. Make sure to check the Encoded checkbox for this parameter.</p>
+
+<center><img src="http://i.imgur.com/wLJLYnl.png" width="600"></center>
+
+
+<p>Now, if you run the tests, they should all return 0% errors.</p>
+
+<h2>Let&rsquo;s See the Cat!</h2>
+
+<p>In order to make a call to <code>cats#show</code> we&rsquo;ll need the specific ID of the cat that we wish to view. There are a few ways to grab this, but since I&rsquo;m not familiar with JMeter, I decided to use a Regex Extractor like the one I used for the authenticity token. Since the <code>create</code> action redirects to the <code>show</code> page, the HTML response for <code>create</code> includes a link that has the cat&rsquo;s ID. So I set up my Regex Extractor as follows:</p>
+
+<center><img src="http://i.imgur.com/5eG76LL.png" width="600"></center>
+
+
+<p>Now that I saved the cat&rsquo;s ID into a <code>CAT_ID</code> variable, I can embed it in the path for my <code>cats#show</code> request. The rest is pretty simple:</p>
+
+<center><img src="http://i.imgur.com/qKBY9BT.png" width="600"></center>
+
+
+<h2>Destruction</h2>
+
+<p>Unfortunately, our testing took a turn for the evil – we had to destroy our cat! The call to <code>cats#destroy</code> is a <code>DELETE</code> request to <code>/cats/${CAT_ID}</code>. The only catch is that we need both our ID and our authenticity token, but they&rsquo;re all set up, so it&rsquo;s easy. Remember to encode the token:</p>
+
+<center><img src="http://i.imgur.com/4c8Xmo9.png" width="600"></center>
+
+
+<p>Now, if we run our tests, we get no errors on any of the tests and we can start tracking performance!</p>
+
+<center><img src="http://i.imgur.com/qpbABjc.png" width="600"></center>
+
+
+<p>Hooray!</p>
+
+<center><img src="https://media.giphy.com/media/Md4xQfuJeTtx6/giphy.gif" width="300"></center>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn"><a href="/about" title="About the author (Amanda Chang)" rel="author">Amanda Chang</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-23T13:52:33-05:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://computerwalksintobar.com/blog/2015/10/23/the-anatomy-of-the-jmeter-load-test/" data-via="" data-counturl="http://computerwalksintobar.com/blog/2015/10/23/the-anatomy-of-the-jmeter-load-test/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/23/exploring-state-diagrams/" title="Previous Post: Exploring State Diagrams">&laquo; Exploring State Diagrams</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Amanda Chang -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

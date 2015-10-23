@@ -4,7 +4,7 @@
   <title><![CDATA[Category: modeling | A Computer Walks Into A Bar]]></title>
   <link href="http://computerwalksintobar.com/blog/categories/modeling/atom.xml" rel="self"/>
   <link href="http://computerwalksintobar.com/"/>
-  <updated>2015-09-03T14:23:09-04:00</updated>
+  <updated>2015-10-23T14:02:03-05:00</updated>
   <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Exploring State Diagrams]]></title>
     <link href="http://computerwalksintobar.com/blog/2015/07/23/exploring-state-diagrams/"/>
-    <updated>2015-07-23T09:56:22-04:00</updated>
+    <updated>2015-07-23T08:56:22-05:00</updated>
     <id>http://computerwalksintobar.com/blog/2015/07/23/exploring-state-diagrams</id>
     <content type="html"><![CDATA[<p>Part of the Flatiron School web development curriculum is a month-long Project Mode, so we as instructors advise the students on modeling their data. We always have the students map out their models and associations before beginning to code, but there are tools besides basic flowcharts that can help a project simplify its data. One of those tools is the <strong>state diagram</strong>.</p>
 

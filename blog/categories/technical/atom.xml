@@ -4,7 +4,7 @@
   <title><![CDATA[Category: technical | A Computer Walks Into A Bar]]></title>
   <link href="http://computerwalksintobar.com/blog/categories/technical/atom.xml" rel="self"/>
   <link href="http://computerwalksintobar.com/"/>
-  <updated>2015-09-03T14:23:09-04:00</updated>
+  <updated>2015-10-23T14:02:03-05:00</updated>
   <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Understanding Procs for Sorting in Ruby – Part Two]]></title>
     <link href="http://computerwalksintobar.com/blog/2015/06/09/understanding-procs-for-sorting-in-ruby-part-two/"/>
-    <updated>2015-06-09T15:11:17-04:00</updated>
+    <updated>2015-06-09T14:11:17-05:00</updated>
     <id>http://computerwalksintobar.com/blog/2015/06/09/understanding-procs-for-sorting-in-ruby-part-two</id>
     <content type="html"><![CDATA[<h2>Recap</h2>
 
@@ -112,7 +112,7 @@ end
   <entry>
     <title type="html"><![CDATA[Understanding Procs for Sorting in Ruby – Part One]]></title>
     <link href="http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one/"/>
-    <updated>2015-06-08T14:00:04-04:00</updated>
+    <updated>2015-06-08T13:00:04-05:00</updated>
     <id>http://computerwalksintobar.com/blog/2015/06/08/understanding-procs-for-sorting-in-ruby-part-one</id>
     <content type="html"><![CDATA[<h2>What is a Proc, Anyway?</h2>
 
