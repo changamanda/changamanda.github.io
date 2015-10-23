@@ -4,7 +4,7 @@
   <title><![CDATA[A Computer Walks Into A Bar]]></title>
   <link href="http://computerwalksintobar.com/atom.xml" rel="self"/>
   <link href="http://computerwalksintobar.com/"/>
-  <updated>2015-10-23T14:11:00-05:00</updated>
+  <updated>2015-10-23T14:14:32-05:00</updated>
   <id>http://computerwalksintobar.com/</id>
   <author>
     <name><![CDATA[Amanda Chang]]></name>
@@ -138,6 +138,142 @@
 
 <center><img src="https://media.giphy.com/media/Md4xQfuJeTtx6/giphy.gif" width="300"></center>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Bootstrap Themes to Style Your Rails App]]></title>
+    <link href="http://computerwalksintobar.com/blog/2015/09/03/using-bootstrap-themes-to-style-your-rails-app/"/>
+    <updated>2015-09-03T14:13:07-05:00</updated>
+    <id>http://computerwalksintobar.com/blog/2015/09/03/using-bootstrap-themes-to-style-your-rails-app</id>
+    <content type="html"><![CDATA[<p><em>&ldquo;Style is a way to say who you are without having to speak.&rdquo;</em>
+– Rachel Zoe</p>
+
+<p>As a developer, I sometimes find myself wanting to integrate a preexisting themes into my web applications. But the Rails asset pipeline can make the setup of these themes tricky. So, when I utilize Bootstrap themes, I tend to follow a specific progression in order to get my fancy themes up and running.</p>
+
+<p><img src="https://media.giphy.com/media/3bKZlDZjU0hR6/giphy.gif" alt="Fancy Dog Gif" /></p>
+
+<p>Let&rsquo;s take a look at this process, using the Rival theme from the WrapBootstrap marketplace.</p>
+
+<h2>Requiring Dependencies</h2>
+
+<p>In order to use components from a theme, we&rsquo;ll need to successfully require all of the themes assets in the <code>vendor/assets/stylesheets</code> and <code>vendor/assets/javascripts</code> folders. Let&rsquo;s take a look at our theme in the browser:</p>
+
+<p><img src="http://i.imgur.com/oUS8YrB.png" alt="Rival Theme" /></p>
+
+<p>For this post, we&rsquo;ll use an unstyled Cat App, and I&rsquo;d love to grab this sortable gallery for my kittens. If we right-click on the theme page, we can view the page source.</p>
+
+<p><img src="http://i.imgur.com/XN7UP4j.png" alt="View Page Source" /></p>
+
+<h3>CSS Dependencies</h3>
+
+<p>We&rsquo;re going to want to grab the CSS and Javascript files from the theme and require them <strong>in the correct order</strong> in the Rails application. Let&rsquo;s start with the CSS files – we&rsquo;ll want to copy and paste the <code>link</code> tags into a new document in our text editor.</p>
+
+<p><img src="http://i.imgur.com/VZ8xgUN.png" alt="CSS Files" /></p>
+
+<p>From there, let&rsquo;s modify the link tags paths to fit the CSS <a href="https://github.com/sstephenson/sprockets">Sprockets</a> format, as demonstrated below. Not that the CSS Sprockets <code>require</code> does <em>not</em> include the <code>.css</code> extension.</p>
+
+<p><img src="http://i.imgur.com/Mkw3ISe.png" alt="Require CSS" /></p>
+
+<p>Now, we&rsquo;ll copy and paste the Sprockets into our <code>application.css</code> file.</p>
+
+<p><img src="http://i.imgur.com/PCVzVE9.png" alt="CSS Sprockets" /></p>
+
+<p>The last step is to ensure that all of the theme&rsquo;s CSS files are included locally in the <code>vendor/assets/stylesheets</code> folder. In Rival, we&rsquo;ll copy every file from <code>Site/assets/css</code>, as well as <code>Site/assets/boostrap/css/bootstrap.min.css</code>, into our <code>vendor/assets/stylesheets</code> folder. This will be different for each Bootstrap theme.</p>
+
+<h3>Javascript Dependencies</h3>
+
+<p>We&rsquo;ll want to follow the same process for our Javascript <code>script</code> tags. Let&rsquo;s copy them into a new document.</p>
+
+<p><img src="http://i.imgur.com/U9HkOGU.png" alt="JS Files" /></p>
+
+<p>One thing that I immediately notice is that one of the <code>script</code> tags links to an external resource, not a local file. I don&rsquo;t know what to do with it yet, so we&rsquo;ll deal with it later. Note that JS Sprockets <strong>do</strong> include the <code>.js</code> extension.</p>
+
+<p><img src="http://i.imgur.com/KO7gQCZ.png" alt="JS Sprockets" /></p>
+
+<p>Like last time, we&rsquo;ll copy and paste the Sprockets into our <code>application.js</code> file.</p>
+
+<p><img src="http://i.imgur.com/LBzkzyL.png" alt="JS Sprockets 2" /></p>
+
+<p>This time, we&rsquo;ll copy every file from <code>Site/assets/js</code>, as well as <code>Site/assets/boostrap/js/bootstrap.min.js</code>, into our <code>vendor/assets/javascripts</code> folder. Now, if we look at the Javascript console, we get an error regarding the Google Maps API script that we skipped over before.</p>
+
+<p>You&rsquo;ve got to be kitten me!</p>
+
+<p><img src="http://i.imgur.com/LkqSMnV.png" alt="JS Google Error" /></p>
+
+<p>There&rsquo;s no way to require external resources with Sprockets, so let&rsquo;s add a <code>javascript_include_tag</code> to our <code>application.html.erb</code> file.</p>
+
+<p><img src="http://i.imgur.com/Xxhk7d3.png" alt="JS Include Tag" /></p>
+
+<p>Now our kittens have no errors in the Javascript console! What a happy meow-ment!</p>
+
+<p><img src="https://media.giphy.com/media/SRO0ZwmImic0/giphy.gif" alt="Kittens Required" /></p>
+
+<h2>Integrating Components</h2>
+
+<h3>Portfolio</h3>
+
+<p>Now that all of our dependencies have been required, we can start grabbing some claw-some components from the Bootstrap theme. If we Inspect Element for the portfolio, we can find the start of the portfolio code. We&rsquo;ll copy the line <code>&lt;section class="module"&gt;</code>, and our clipboard will contain all of the code between the start and end of the <code>section</code> element.</p>
+
+<p><img src="http://i.imgur.com/FgN3XV0.png" alt="Grab Portfolio" /></p>
+
+<p>Let&rsquo;s paste that into a new document. Now, we have to decide which bits of that code we want to integrate into our Rails views, and, more speficially, what needs to be dynamic. We&rsquo;ll want a portfolio item for each of our cat items, so let&rsquo;s copy the list items code.</p>
+
+<p><img src="http://i.imgur.com/Dzj4gTh.png" alt="Portfolio Item" /></p>
+
+<p>Now, let&rsquo;s paste that into an ERB <code>each</code> loop:</p>
+
+<p><img src="http://i.imgur.com/3Jk5RZn.png" alt="ERB" /></p>
+
+<p>We know that whenever we have <code>li</code> elements, we&rsquo;ll want a <code>ul</code> element to wrap the list items, so we&rsquo;ll grab that <code>ul</code> element, as well as the <code>section</code> and container <code>div</code>, from the theme code, and paste them before our ERB <code>@cats.each</code> loop.</p>
+
+<p><img src="http://i.imgur.com/v4XxQKK.png" alt="ERB Header" /></p>
+
+<p>And we&rsquo;ll close the <code>ul</code>, <code>div</code>, and <code>section</code> tags after our ERB <code>end</code> – bonus points <em>fur</em> spotting the mis-indentation:</p>
+
+<p><img src="http://i.imgur.com/FvQgpes.png" alt="ERB Footer" /></p>
+
+<p>If we refresh the page now, we&rsquo;ll get a gallery full of broken images. How <em>a-paw-ling</em>! In order to see our adorable cats, we replace the <code>img</code> element with our ERB <code>image_tag</code>.</p>
+
+<p><img src="http://i.imgur.com/UbtzopX.png" alt="ERB Images" /></p>
+
+<p>Refresh the page! <strong>Kittens!</strong></p>
+
+<p><img src="http://i.imgur.com/LDAJYxC.png" alt="Cat Gallery" /></p>
+
+<p>BUT. Our kittens are still named &ldquo;Corporate Identity&rdquo;. That&rsquo;s not a great name for one kitten, let alone many. So let&rsquo;s replace &ldquo;Corporate Identity&rdquo; with the identifier <code>Cat &lt;%= cat.id %&gt;</code>.</p>
+
+<p><img src="http://i.imgur.com/8NxEOJS.png" alt="ERB Names" /></p>
+
+<p>Now, we can hover over our kittens in the gallery to get their IDs!</p>
+
+<p><img src="http://i.imgur.com/8vHusPA.png" alt="Cat 1" /></p>
+
+<h3>Filters</h3>
+
+<p>Now that the gallery is functioning properly, we can add filters. Let&rsquo;s copy the <code>&lt;div class="row"&gt;</code> element, and paste it inside <code>&lt;div class="container"&gt;</code>, before the <code>each</code> loop.</p>
+
+<p><img src="http://i.imgur.com/VWA4FHn.png" alt="Filters" /></p>
+
+<p>The theme&rsquo;s filters now show up in the browser. Let&rsquo;s modify them for our cats!</p>
+
+<p><img src="http://i.imgur.com/2pm12G7.png" alt="Demo Filters" /></p>
+
+<p>The <code>data-filter</code> in each filter corresponds with the class name in our portfolio items. So, adding a filter with <code>data-filter=".animated"</code> means that clicking on it will keep all elements with the class <code>animated</code>.</p>
+
+<p><img src="http://i.imgur.com/pqduxoC.png" alt="Animated Filters" /></p>
+
+<p>So, let&rsquo;s use ERB to add a class name of <code>animated</code> to each <code>cat</code> list item where <code>cat.animated</code> is true.</p>
+
+<p><img src="http://i.imgur.com/QrU2nt6.png" alt="Animated ERB" /></p>
+
+<p>Now, if we click on the &ldquo;Animated&rdquo; filter, we&rsquo;ll get some cat GIFs!</p>
+
+<p><img src="http://i.imgur.com/dpffP2s.png" alt="Animated Gallery" /></p>
+
+<h3>Purr-fect – hooray!</h3>
+
+<p><img src="https://media.giphy.com/media/ToCRja2miF3Xi/giphy.gif" alt="Happy Cat" /></p>
 ]]></content>
   </entry>
   
